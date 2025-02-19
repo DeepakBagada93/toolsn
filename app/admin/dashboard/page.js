@@ -141,98 +141,100 @@ export default function AdminDashboard() {
   }
 
   return (
-    <div className="max-w-6xl mx-auto p-4">
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold text-black">Admin Dashboard</h1>
-        <button
-          onClick={() => {
-            sessionStorage.removeItem('adminUser');
-            router.push('/admin/login');
-          }}
-          className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
-        >
-          Logout
-        </button>
-      </div>
+    <div className="w-full">
+      <div className="max-w-[2000px] mx-auto p-4">
+        <div className="flex justify-between items-center mb-6">
+          <h1 className="text-2xl font-bold text-black">Admin Dashboard</h1>
+          <button
+            onClick={() => {
+              sessionStorage.removeItem('adminUser');
+              router.push('/admin/login');
+            }}
+            className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+          >
+            Logout
+          </button>
+        </div>
 
-      {/* User Management Section */}
-      <div className="bg-white rounded-lg shadow-md p-6 mb-6">
-        <h2 className="text-xl font-semibold mb-4 text-black">User Management</h2>
-        {users.length === 0 ? (
-          <p className="text-gray-500">No users found.</p>
-        ) : (
-          <div className="overflow-x-auto">
-            <table className="min-w-full">
-              <thead>
-                <tr className="bg-gray-100">
-                  <th className="px-6 py-3 text-left">Email</th>
-                  <th className="px-6 py-3 text-left">Name</th>
-                  <th className="px-6 py-3 text-left">Status</th>
-                  <th className="px-6 py-3 text-left">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {users.map((user) => (
-                  <tr key={user.id} className="border-t">
-                    <td className="px-6 py-4">{user.email}</td>
-                    <td className="px-6 py-4">
-                      {user.user_metadata?.full_name || 'N/A'}
-                    </td>
-                    <td className="px-6 py-4">
-                      <span className={`px-2 py-1 rounded ${
-                        user.is_approved ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
-                      }`}>
-                        {user.is_approved ? 'Approved' : 'Pending'}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4">
-                      <button
-                        onClick={() => handleApproval(user.id, !user.is_approved)}
-                        className={`px-3 py-1 rounded ${
-                          user.is_approved 
-                            ? 'bg-red-500 hover:bg-red-600 text-white'
-                            : 'bg-green-500 hover:bg-green-600 text-white'
-                        }`}
-                      >
-                        {user.is_approved ? 'Revoke Access' : 'Approve'}
-                      </button>
-                    </td>
+        {/* User Management Section */}
+        <div className="bg-white rounded-lg shadow-md p-6 mb-6">
+          <h2 className="text-xl font-semibold mb-4 text-black">User Management</h2>
+          {users.length === 0 ? (
+            <p className="text-gray-500">No users found.</p>
+          ) : (
+            <div className="overflow-x-auto">
+              <table className="min-w-full">
+                <thead>
+                  <tr className="bg-gray-100">
+                    <th className="px-6 py-3 text-left">Email</th>
+                    <th className="px-6 py-3 text-left">Name</th>
+                    <th className="px-6 py-3 text-left">Status</th>
+                    <th className="px-6 py-3 text-left">Actions</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
-      </div>
+                </thead>
+                <tbody>
+                  {users.map((user) => (
+                    <tr key={user.id} className="border-t">
+                      <td className="px-6 py-4">{user.email}</td>
+                      <td className="px-6 py-4">
+                        {user.user_metadata?.full_name || 'N/A'}
+                      </td>
+                      <td className="px-6 py-4">
+                        <span className={`px-2 py-1 rounded ${
+                          user.is_approved ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+                        }`}>
+                          {user.is_approved ? 'Approved' : 'Pending'}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4">
+                        <button
+                          onClick={() => handleApproval(user.id, !user.is_approved)}
+                          className={`px-3 py-1 rounded ${
+                            user.is_approved 
+                              ? 'bg-red-500 hover:bg-red-600 text-white'
+                              : 'bg-green-500 hover:bg-green-600 text-white'
+                          }`}
+                        >
+                          {user.is_approved ? 'Revoke Access' : 'Approve'}
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </div>
 
-      {/* Products Section */}
-      <div className="bg-white rounded-lg shadow-md p-6">
-        <h2 className="text-xl font-semibold mb-4 text-black">All Products</h2>
-        {products.length === 0 ? (
-          <p className="text-gray-500">No products found.</p>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {products.map((product) => (
-              <div key={product.id} className="border rounded-lg p-4">
-                {product.image_url && (
-                  <img
-                    src={product.image_url}
-                    alt={product.name}
-                    className="w-full h-48 object-cover mb-4 rounded"
-                  />
-                )}
-                <h3 className="font-semibold text-black">{product.name}</h3>
-                <p className="text-black">{product.category}</p>
-                <p className="text-black">{product.description}</p>
-                <p className="text-green-600 font-semibold">${product.price}</p>
-                <p className="text-black">Stock: {product.stock}</p>
-                <p className="text-sm text-gray-500 mt-2">
-                  Added by: {product.profiles?.email || 'Unknown'}
-                </p>
-              </div>
-            ))}
-          </div>
-        )}
+        {/* Products Section */}
+        <div className="bg-white rounded-lg shadow-md p-6">
+          <h2 className="text-xl font-semibold mb-4 text-black">All Products</h2>
+          {products.length === 0 ? (
+            <p className="text-gray-500">No products found.</p>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+              {products.map((product) => (
+                <div key={product.id} className="border rounded-lg p-4">
+                  {product.image_url && (
+                    <img
+                      src={product.image_url}
+                      alt={product.name}
+                      className="w-full h-48 object-cover mb-4 rounded"
+                    />
+                  )}
+                  <h3 className="font-semibold text-black">{product.name}</h3>
+                  <p className="text-black">{product.category}</p>
+                  <p className="text-black">{product.description}</p>
+                  <p className="text-green-600 font-semibold">${product.price}</p>
+                  <p className="text-black">Stock: {product.stock}</p>
+                  <p className="text-sm text-gray-500 mt-2">
+                    Added by: {product.profiles?.email || 'Unknown'}
+                  </p>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

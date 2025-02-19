@@ -39,74 +39,82 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="bg-white p-4 shadow-md">
-      <div className="container mx-auto flex justify-between items-center">
-        <h1 className="text-xl font-bold text-gray-800">ToolShop</h1>
-        <ul className="flex space-x-4 items-center">
-          <li>
-            <Link href="/" className="text-gray-800 hover:text-gray-600">
-              Home
-            </Link>
-          </li>
-          <li>
-            <Link href="/about" className="text-gray-800 hover:text-gray-600">
-              About
-            </Link>
-          </li>
-          <li>
-            <Link href="/products" className="text-gray-800 hover:text-gray-600">
-              Products
-            </Link>
-          </li>
-          <li>
-            <Link href="/contact" className="text-gray-800 hover:text-gray-600">
-              Contact
-            </Link>
-          </li>
-          <li>
-            {user ? (
-              <div className="relative">
+    <nav className="bg-white shadow-md w-full">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-16">
+          <Link href="/" className="flex items-center">
+            <img
+              src="/logo.webp"
+              alt="Tooldocker Logo"
+              className="h-12 w-auto"
+            />
+          </Link>
+          <ul className="flex space-x-6 items-center">
+            <li>
+              <Link href="/" className="text-gray-800 hover:text-gray-600">
+                Home
+              </Link>
+            </li>
+            <li>
+              <Link href="/about" className="text-gray-800 hover:text-gray-600">
+                About
+              </Link>
+            </li>
+            <li>
+              <Link href="/products" className="text-gray-800 hover:text-gray-600">
+                Products
+              </Link>
+            </li>
+            <li>
+              <Link href="/contact" className="text-gray-800 hover:text-gray-600">
+                Contact
+              </Link>
+            </li>
+            <li>
+              {user ? (
+                <div className="relative">
+                  <button
+                    onClick={toggleMenu}
+                    className="flex items-center space-x-2 focus:outline-none"
+                  >
+                    <img
+                      src={user.user_metadata?.avatar_url || '/default-avatar.png'}
+                      alt="Profile"
+                      className="w-8 h-8 rounded-full"
+                    />
+                    <span className="text-gray-800">
+                      {user.user_metadata?.full_name || user.user_metadata?.name || 'User'}
+                    </span>
+                  </button>
+                  
+                  {isMenuOpen && (
+                    <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10">
+                      <Link
+                        href="/dashboard"
+                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      >
+                        Dashboard
+                      </Link>
+                      <button
+                        onClick={handleLogout}
+                        className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      >
+                        Logout
+                      </button>
+                    </div>
+                  )}
+                </div>
+              ) : (
                 <button
-                  onClick={toggleMenu}
-                  className="flex items-center space-x-2 focus:outline-none"
+                  onClick={handleLogin}
+                  className="bg-black text-white px-4 py-2 rounded hover:bg-gray-800"
                 >
-                  <img
-                    src={user.user_metadata?.avatar_url || '/default-avatar.png'}
-                    alt="Profile"
-                    className="w-8 h-8 rounded-full"
-                  />
-                  <span className="text-gray-800">
-                    {user.user_metadata?.full_name || user.user_metadata?.name || 'User'}
-                  </span>
+                  Login
                 </button>
-                
-                {isMenuOpen && (
-                  <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10">
-                    <Link
-                      href="/dashboard"
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                    >
-                      Dashboard
-                    </Link>
-                    <button
-                      onClick={handleLogout}
-                      className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                    >
-                      Logout
-                    </button>
-                  </div>
-                )}
-              </div>
-            ) : (
-              <button
-                onClick={handleLogin}
-                className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-              >
-                Login with Google
-              </button>
-            )}
-          </li>
-        </ul>
+              )}
+            </li>
+          </ul>
+        </div>
       </div>
     </nav>
   );
