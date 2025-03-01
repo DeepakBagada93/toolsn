@@ -49,7 +49,7 @@ export default function Shop() {
   if (loading) return <div>Loading...</div>;
 
   return (
-    <div className="w-full bg-white">
+    <div className="w-full bg-[#fce8eb]">
       <div className="max-w-[2000px] mx-auto p-4">
         {/* Hero Section */}
         <div className="relative py-16 bg-gray-50 rounded-lg mb-12">
