@@ -1,6 +1,7 @@
 'use client';
 import { useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabaseClient';
+import { motion } from 'framer-motion';
 
 export default function Shop() {
   const [products, setProducts] = useState([]);
@@ -46,20 +47,45 @@ export default function Shop() {
     return matchesCategory && matchesSearch;
   });
 
+  const fadeInUp = {
+    initial: { opacity: 0, y: 60 },
+    animate: { opacity: 1, y: 0 },
+    transition: { duration: 0.6 }
+  };
+
+  const staggerContainer = {
+    animate: {
+      transition: {
+        staggerChildren: 0.1
+      }
+    }
+  };
+
   if (loading) return <div>Loading...</div>;
 
   return (
-    <div className="w-full bg-[#fce8eb]">
-      <div className="max-w-[2000px] mx-auto p-4">
+    <div className="w-full bg-[#fce8eb] mt-[100px]">
+      
+      <motion.div
+        initial={{ opacity: 0, y: 60 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="max-w-[2000px] mx-auto p-4"
+      >
         {/* Hero Section */}
-        <div className="relative py-16 bg-gray-50 rounded-lg mb-12">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          className="relative py-16 bg-gray-50 rounded-lg mb-12"
+        >
           <div className="max-w-4xl mx-auto text-center px-4">
             <h1 className="text-4xl font-bold text-gray-900 mb-6">Our Products</h1>
             <p className="text-xl text-gray-600">
               Discover our wide range of professional stone and tile cutting equipment
             </p>
           </div>
-        </div>
+        </motion.div>
 
         {/* Filters */}
         <div className="mb-8 flex flex-col md:flex-row gap-4">
@@ -84,9 +110,18 @@ export default function Shop() {
         </div>
 
         {/* Products Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+        <motion.div
+          variants={staggerContainer}
+          initial="initial"
+          animate="animate"
+          className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6"
+        >
           {filteredProducts.map((product) => (
-            <div key={product.id} className="bg-white rounded-lg shadow-md overflow-hidden">
+            <motion.div
+              key={product.id}
+              variants={fadeInUp}
+              className="bg-white rounded-lg shadow-md overflow-hidden"
+            >
               {product.image_url && (
                 <img
                   src={product.image_url}
@@ -104,10 +139,11 @@ export default function Shop() {
                   Add to Cart
                 </button>
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
     </div>
+
   );
 } 

@@ -2,8 +2,11 @@
 import { useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabaseClient';
 import LogoSlider from './components/LogoSlider';
+import { motion } from 'framer-motion';
+import { useRouter } from 'next/navigation';
 
 export default function Home() {
+  const router = useRouter();
 
   const slides = [
     {
@@ -20,8 +23,6 @@ export default function Home() {
     }
   ];
 
-
-
   const [currentSlide, setCurrentSlide] = useState(0);
 
   useEffect(() => {
@@ -31,7 +32,6 @@ export default function Home() {
 
     return () => clearInterval(interval);
   }, []);
-
 
   const tools = [
     { id: 1, name: "Tool 1", img: "https://s.alicdn.com/@sc04/kf/Hb70995c421ba48798faf8e815c0a1affF.jpg_720x720q50.jpg" },
@@ -104,6 +104,27 @@ export default function Home() {
     { image: "company/c4.png" },
   ];
 
+  const fadeInUp = {
+    initial: { opacity: 0, y: 60 },
+    animate: { opacity: 1, y: 0 },
+    transition: { duration: 0.6 }
+  };
+
+  const staggerContainer = {
+    animate: {
+      transition: {
+        staggerChildren: 0.1
+      }
+    }
+  };
+
+  const handleProductClick = (product) => {
+    const slug = `${product.name
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/(^-|-$)+/g, '')}-${product.id}`;
+    router.push(`/product/${slug}`);
+  };
 
   if (loading) return (
     <div className="flex justify-center items-center min-h-screen">
@@ -111,36 +132,35 @@ export default function Home() {
     </div>
   );
 
-
-
   return (
     <div className="w-full">
-      <div className="grid grid-cols-1 md:grid-cols-2 w-full h-[400px] mt-[200px]">
-        {/* Left Content Section */}
-        <div className="flex flex-col justify-center items-start p-6 bg-[#fce8eb] text-black">
-          <h2 className="text-3xl font-bold">{slides[currentSlide].title}</h2>
-          <p className="text-lg text-gray-700 mt-2">{slides[currentSlide].description}</p>
-        </div>
+      <div className="relative w-full h-screen">
+        <div className="grid grid-cols-1 md:grid-cols-2 w-full h-[400px] mt-[200px]">
+          {/* Left Content Section */}
+          <div className="flex flex-col justify-center items-start p-6 bg-[#fce8eb] text-black">
+            <h2 className="text-5xl font-bold">{slides[currentSlide].title}</h2>
+            <p className="text-lg text-gray-700 mt-2">{slides[currentSlide].description}</p>
+          </div>
 
-        {/* Right Image Slider Section */}
-        <div className="relative w-full h-[400px] overflow-hidden">
-          {slides.map((slide, index) => (
-            <div
-              key={slide.id}
-              className={`absolute inset-0 transition-opacity duration-1000 ${index === currentSlide ? "opacity-100" : "opacity-0"
-                }`}
-            >
-              <img
-                src={slide.image}
-                alt={slide.title}
-                className="w-full h-full object-cover"
-              />
-            </div>
-          ))}
+          {/* Right Image Slider Section */}
+          <div className="relative w-full h-[400px] overflow-hidden">
+            {slides.map((slide, index) => (
+              <div
+                key={slide.id}
+                className={`absolute inset-0 transition-opacity duration-1000 ${index === currentSlide ? "opacity-100" : "opacity-0"
+                  }`}
+              >
+                <img
+                  src={slide.image}
+                  alt={slide.title}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            ))}
+          </div>
         </div>
       </div>
-
-      <LogoSlider logos={logos} />;
+      <LogoSlider logos={logos} />
 
       <section className="overflow-hidden bg-[#fce8eb] sm:grid sm:grid-cols-2 sm:items-center">
         <div className="p-8 md:p-12 lg:px-16 lg:py-24">
@@ -170,10 +190,6 @@ export default function Home() {
           className="h-full w-full object-cover sm:h-[calc(100%_-_2rem)] sm:self-end sm:rounded-ss-[30px] md:h-[calc(100%_-_4rem)] md:rounded-ss-[60px]"
         />
       </section>
-
-
-
-
 
       <section className="bg-[#fce8eb] py-12">
         <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
@@ -233,43 +249,64 @@ export default function Home() {
         </div>
       </section>
 
-
-
-
-
       <div className="max-w-screen-xl mx-auto p-4">
-  <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
-    {products.map((product) => (
-      <div key={product.id} className="bg-[#e31c39] rounded-lg shadow-md overflow-hidden">
-        {product.image_url && (
-          <img
-            src={product.image_url}
-            alt={product.name}
-            className="w-full h-48 object-cover"
-          />
-        )}
-        <div className="p-4">
-          <h2 className="text-xl font-semibold text-white mb-2">{product.name}</h2>
-          <p className="text-sm text-white mb-2">Category: {product.category}</p>
-          <p className="text-white mb-3">{product.description}</p>
-          <p className="text-2xl font-bold text-white mb-2">${product.price}</p>
-          <p className="text-sm text-white mb-2">Stock: {product.stock}</p>
-          <p className="text-sm text-white">
-            Seller: {product.profiles?.full_name || product.profiles?.email || 'Unknown'}
-          </p>
-        </div>
+        <motion.div
+          variants={staggerContainer}
+          initial="initial"
+          animate="animate"
+          className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6"
+        >
+          {products.map((product, index) => (
+            <motion.div
+              key={product.id}
+              variants={fadeInUp}
+              className="bg-[#e31c39] rounded-lg shadow-md overflow-hidden cursor-pointer hover:opacity-90 transition-opacity"
+              onClick={() => handleProductClick(product)}
+            >
+              {product.image_url && (
+                <img
+                  src={product.image_url}
+                  alt={product.name}
+                  className="w-full h-48 object-cover"
+                />
+              )}
+              <div className="p-4">
+                <h2 className="text-xl font-semibold text-white mb-2">{product.name}</h2>
+                <p className="text-sm text-white mb-2">Category: {product.category}</p>
+                <p className="text-white mb-3">{product.description}</p>
+                <p className="text-2xl font-bold text-white mb-2">${product.price}</p>
+                <p className="text-sm text-white mb-2">Stock: {product.stock}</p>
+                <p className="text-sm text-white">
+                  Seller: {product.profiles?.full_name || product.profiles?.email || 'Unknown'}
+                </p>
+              </div>
+            </motion.div>
+          ))}
+        </motion.div>
       </div>
-    ))}
-  </div>
-</div>
       <section className="bg-[#fce8eb] py-12">
         <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
-          <h1 className="text-3xl font-bold text-black mb-8 text-center">Explore Our Tools</h1>
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+            className="text-3xl font-bold text-black mb-8 text-center"
+          >
+            Explore Our Tools
+          </motion.h1>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-6 gap-4">
+          <motion.div
+            variants={staggerContainer}
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: true }}
+            className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-6 gap-4"
+          >
             {tools.map((tool) => (
-              <div
+              <motion.div
                 key={tool.id}
+                variants={fadeInUp}
                 className="flex flex-col items-center p-4 bg-[#e31c39] rounded-lg shadow-md transition-transform duration-300 hover:scale-110"
               >
                 <div className="w-20 h-20 bg-[#e31c39] rounded-full flex items-center justify-center mb-2">
@@ -280,13 +317,11 @@ export default function Home() {
                   />
                 </div>
                 <p className="text-sm font-medium text-white">{tool.name}</p>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
-
-
 
       <section className="bg-[#fce8eb] py-12">
         <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
@@ -315,8 +350,13 @@ export default function Home() {
         </div>
       </section>
 
-
-      <div className="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
+      <motion.div
+        initial={{ opacity: 0, y: 60 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
+        className="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8"
+      >
         <div className="mx-auto max-w-3xl text-center">
           <h2 className="text-3xl font-bold text-[#000000] sm:text-4xl">
             Trusted by the Stone & Tile Cutting Industry
@@ -348,15 +388,7 @@ export default function Home() {
             <dd className="text-4xl font-extrabold text-[#e31c39] md:text-5xl">98%</dd>
           </div>
         </dl>
-      </div>
-
-
-
-
-
-
-
+      </motion.div>
     </div>
-
   );
 }

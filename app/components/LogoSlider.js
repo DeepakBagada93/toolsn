@@ -15,7 +15,7 @@ const LogoSlider = ({ logos }) => {
     }, [logos.length]);
 
   return (
-    <div className="w-full overflow-hidden bg-[#fce8eb] py-6">
+    <div className="w-full overflow-hidden bg-[#fce8eb] pb-6 mt-[-60px]">
     <div
       className="flex transition-transform duration-1000 ease-in-out"
       style={{
@@ -41,6 +41,7 @@ const LogoSlider = ({ logos }) => {
       )}
     </div>
   </div>
+
   );
 };
 

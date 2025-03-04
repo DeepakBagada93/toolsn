@@ -119,10 +119,11 @@ export default function Navbar() {
               {MAIN_NAV_ITEMS.map((item) => (
                 <li key={item}>
                   <Link
-                    href={item === 'Home' ? '/' : `/${item.toLowerCase()}`} // Updated href for "Home"
-                    className="text-gray-800 hover:text-[#e31c39] transition duration-300 font-medium"
+                    href={item === 'Home' ? '/' : `/${item.toLowerCase()}`}
+                    className="text-gray-800 hover:text-[#e31c39] active:text-[#c2182b] transition-all duration-300 font-medium relative group"
                   >
                     {item}
+                    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#e31c39] group-hover:w-full transition-all duration-300" />
                   </Link>
                 </li>
               ))}
@@ -134,11 +135,12 @@ export default function Navbar() {
                 onMouseLeave={() => setIsMegaMenuOpen(false)}
               >
                 <button
-                  className="text-gray-800 hover:text-[#e31c39] transition duration-300 font-medium focus:outline-none"
+                  className="text-gray-800 hover:text-[#e31c39] active:text-[#c2182b] transition-all duration-300 font-medium focus:outline-none relative group"
                   aria-haspopup="true"
                   aria-expanded={isMegaMenuOpen}
                 >
                   Categories
+                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#e31c39] group-hover:w-full transition-all duration-300" />
                 </button>
                 {/* Mega Menu */}
                 {isMegaMenuOpen && (
@@ -256,9 +258,10 @@ export default function Navbar() {
                 <li key={item}>
                   <Link
                     href={`/${item.toLowerCase().replace(/ /g, '-')}`}
-                    className="text-white hover:text-gray-200 transition duration-300 font-medium"
+                    className="text-white hover:text-gray-200 active:text-gray-300 transition-all duration-300 font-medium relative group"
                   >
                     {item}
+                    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-white group-hover:w-full transition-all duration-300" />
                   </Link>
                 </li>
               ))}
@@ -274,11 +277,12 @@ export default function Navbar() {
             {MAIN_NAV_ITEMS.map((item) => (
               <li key={item}>
                 <Link
-                  href={item === 'Home' ? '/' : `/${item.toLowerCase()}`} // Updated href for "Home"
-                  className="text-gray-800 hover:text-[#e31c39] transition duration-300 block py-2 font-medium"
+                  href={item === 'Home' ? '/' : `/${item.toLowerCase()}`}
+                  className="text-gray-800 hover:text-[#e31c39] active:text-[#c2182b] transition-all duration-300 block py-2 font-medium relative group"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   {item}
+                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#e31c39] group-hover:w-full transition-all duration-300" />
                 </Link>
               </li>
             ))}
@@ -286,14 +290,14 @@ export default function Navbar() {
               {user ? (
                 <button
                   onClick={handleLogout}
-                  className="w-full text-gray-800 hover:text-[#e31c39] transition duration-300 py-2 font-medium"
+                  className="w-full text-gray-800 hover:text-[#e31c39] active:text-[#c2182b] transition-all duration-300 py-2 font-medium"
                 >
                   Logout
                 </button>
               ) : (
                 <button
                   onClick={handleLogin}
-                  className="bg-[#e31c39] text-white px-6 py-2 rounded-lg hover:bg-[#c2182b] transition duration-300 font-medium"
+                  className="bg-[#e31c39] text-white px-6 py-2 rounded-lg hover:bg-[#c2182b] active:bg-[#a11523] transition-all duration-300 font-medium"
                 >
                   Login
                 </button>
