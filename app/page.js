@@ -2,7 +2,6 @@
 import { useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabaseClient';
 import LogoSlider from './components/LogoSlider';
-import { motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 
 export default function Home() {
@@ -103,20 +102,6 @@ export default function Home() {
     { image: "company/c3.png" },
     { image: "company/c4.png" },
   ];
-
-  const fadeInUp = {
-    initial: { opacity: 0, y: 60 },
-    animate: { opacity: 1, y: 0 },
-    transition: { duration: 0.6 }
-  };
-
-  const staggerContainer = {
-    animate: {
-      transition: {
-        staggerChildren: 0.1
-      }
-    }
-  };
 
   const handleProductClick = (product) => {
     const slug = `${product.name
@@ -250,16 +235,10 @@ export default function Home() {
       </section>
 
       <div className="max-w-screen-xl mx-auto p-4">
-        <motion.div
-          variants={staggerContainer}
-          initial="initial"
-          animate="animate"
-          className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6"
-        >
-          {products.map((product, index) => (
-            <motion.div
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+          {products.map((product) => (
+            <div
               key={product.id}
-              variants={fadeInUp}
               className="bg-[#e31c39] rounded-lg shadow-md overflow-hidden cursor-pointer hover:opacity-90 transition-opacity"
               onClick={() => handleProductClick(product)}
             >
@@ -280,33 +259,18 @@ export default function Home() {
                   Seller: {product.profiles?.full_name || product.profiles?.email || 'Unknown'}
                 </p>
               </div>
-            </motion.div>
+            </div>
           ))}
-        </motion.div>
+        </div>
       </div>
       <section className="bg-[#fce8eb] py-12">
         <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-            className="text-3xl font-bold text-black mb-8 text-center"
-          >
-            Explore Our Tools
-          </motion.h1>
+          <h1 className="text-3xl font-bold text-black mb-8 text-center">Explore Our Tools</h1>
 
-          <motion.div
-            variants={staggerContainer}
-            initial="initial"
-            whileInView="animate"
-            viewport={{ once: true }}
-            className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-6 gap-4"
-          >
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-6 gap-4">
             {tools.map((tool) => (
-              <motion.div
+              <div
                 key={tool.id}
-                variants={fadeInUp}
                 className="flex flex-col items-center p-4 bg-[#e31c39] rounded-lg shadow-md transition-transform duration-300 hover:scale-110"
               >
                 <div className="w-20 h-20 bg-[#e31c39] rounded-full flex items-center justify-center mb-2">
@@ -317,9 +281,9 @@ export default function Home() {
                   />
                 </div>
                 <p className="text-sm font-medium text-white">{tool.name}</p>
-              </motion.div>
+              </div>
             ))}
-          </motion.div>
+          </div>
         </div>
       </section>
 
@@ -350,13 +314,7 @@ export default function Home() {
         </div>
       </section>
 
-      <motion.div
-        initial={{ opacity: 0, y: 60 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6 }}
-        className="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8"
-      >
+      <div className="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
         <div className="mx-auto max-w-3xl text-center">
           <h2 className="text-3xl font-bold text-[#000000] sm:text-4xl">
             Trusted by the Stone & Tile Cutting Industry
@@ -388,7 +346,7 @@ export default function Home() {
             <dd className="text-4xl font-extrabold text-[#e31c39] md:text-5xl">98%</dd>
           </div>
         </dl>
-      </motion.div>
+      </div>
     </div>
   );
 }
