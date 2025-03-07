@@ -33,18 +33,18 @@ export default function Home() {
   }, []);
 
   const tools = [
-    { id: 1, name: "Tool 1", img: "https://s.alicdn.com/@sc04/kf/Hb70995c421ba48798faf8e815c0a1affF.jpg_720x720q50.jpg" },
-    { id: 2, name: "Tool 2", img: "https://s.alicdn.com/@sc04/kf/Hb70995c421ba48798faf8e815c0a1affF.jpg_720x720q50.jpg" },
-    { id: 3, name: "Tool 3", img: "https://s.alicdn.com/@sc04/kf/Hb70995c421ba48798faf8e815c0a1affF.jpg_720x720q50.jpg" },
-    { id: 4, name: "Tool 4", img: "https://s.alicdn.com/@sc04/kf/Hb70995c421ba48798faf8e815c0a1affF.jpg_720x720q50.jpg" },
-    { id: 5, name: "Tool 5", img: "https://s.alicdn.com/@sc04/kf/Hb70995c421ba48798faf8e815c0a1affF.jpg_720x720q50.jpg" },
-    { id: 6, name: "Tool 6", img: "https://s.alicdn.com/@sc04/kf/Hb70995c421ba48798faf8e815c0a1affF.jpg_720x720q50.jpg" },
-    { id: 7, name: "Tool 7", img: "https://s.alicdn.com/@sc04/kf/Hb70995c421ba48798faf8e815c0a1affF.jpg_720x720q50.jpg" },
-    { id: 8, name: "Tool 8", img: "https://s.alicdn.com/@sc04/kf/Hb70995c421ba48798faf8e815c0a1affF.jpg_720x720q50.jpg" },
-    { id: 9, name: "Tool 9", img: "https://s.alicdn.com/@sc04/kf/Hb70995c421ba48798faf8e815c0a1affF.jpg_720x720q50.jpg" },
-    { id: 10, name: "Tool 10", img: "https://s.alicdn.com/@sc04/kf/Hb70995c421ba48798faf8e815c0a1affF.jpg_720x720q50.jpg" },
-    { id: 11, name: "Tool 11", img: "https://s.alicdn.com/@sc04/kf/Hb70995c421ba48798faf8e815c0a1affF.jpg_720x720q50.jpg" },
-    { id: 12, name: "Tool 12", img: "https://s.alicdn.com/@sc04/kf/Hb70995c421ba48798faf8e815c0a1affF.jpg_720x720q50.jpg" }
+    { id: 1, name: "Tool 1", img: "./tools/2.png" },
+    { id: 2, name: "Tool 2", img: "./tools/3.png" },
+    { id: 3, name: "Tool 3", img: "./tools/4.png" },
+    { id: 4, name: "Tool 4", img: "./tools/5.png" },
+    { id: 5, name: "Tool 5", img: "./tools/6.png" },
+    { id: 6, name: "Tool 6", img: "./tools/7.png" },
+    { id: 7, name: "Tool 7", img: "./tools/8.png" },
+    { id: 8, name: "Tool 8", img: "./tools/9.png" },
+    { id: 9, name: "Tool 9", img: "./tools/10.png" },
+    { id: 10, name: "Tool 10", img: "./tools/11.png" },
+    { id: 11, name: "Tool 11", img: "./tools/12.png" },
+    { id: 12, name: "Tool 12", img: "./tools/13.png" }
   ];
 
   const [products, setProducts] = useState([]);
@@ -145,7 +145,24 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <LogoSlider logos={logos} />
+
+      <section>
+  <div className="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 lg:px-8">
+    <div className="space-y-4 md:space-y-8 text-center">
+      <div className="max-w-xl mx-auto">
+        <hr className="w-30 h-[3px] bg-[#d02742] mx-auto mb-4" />
+        <h2 className="text-2xl font-semibold text-gray-900 sm:text-3xl"></h2>
+      </div>
+
+      <img
+        src="./company/clist.png"
+        className="rounded mx-auto"
+        alt=""
+      />
+    </div>
+  </div>
+</section>
+
 
       <section className="overflow-hidden bg-[#fce8eb] sm:grid sm:grid-cols-2 sm:items-center">
         <div className="p-8 md:p-12 lg:px-16 lg:py-24">
@@ -287,6 +304,57 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Duplicated Section with Logo Images */}
+      <div className="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
+
+
+        <dl className="mt-6 grid grid-cols-1 gap-4 sm:mt-8 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="flex flex-col rounded-lg border border-[#ffffff] px-4 py-8 text-center">
+            <div className="mb-4">
+              <img
+                src="/company/s1.png"
+                alt="Partner Logo 1"
+                className="w-24 h-24 mx-auto object-contain"
+              />
+            </div>
+            <dt className="text-lg font-medium text-[#000000]">GREAT VALUE</dt>
+          </div>
+
+          <div className="flex flex-col rounded-lg border border-[#ffffff] px-4 py-8 text-center">
+            <div className="mb-4">
+              <img
+                src="/company/s2.png"
+                alt="Partner Logo 2"
+                className="w-24 h-24 mx-auto object-contain"
+              />
+            </div>
+            <dt className="text-lg font-medium text-[#000000]">SECURED PARTNER</dt>
+          </div>
+
+          <div className="flex flex-col rounded-lg border border-[#ffffff] px-4 py-8 text-center">
+            <div className="mb-4">
+              <img
+                src="/company/s3.png"
+                alt="Partner Logo 3"
+                className="w-24 h-24 mx-auto object-contain"
+              />
+            </div>
+            <dt className="text-lg font-medium text-[#000000]">BUYER PROTECTION</dt>
+          </div>
+
+          <div className="flex flex-col rounded-lg border border-[#ffffff] px-4 py-8 text-center">
+            <div className="mb-4">
+              <img
+                src="/company/s5.png"
+                alt="Partner Logo 4"
+                className="w-24 h-24 mx-auto object-contain"
+              />
+            </div>
+            <dt className="text-lg font-medium text-[#000000]">365 DAYS HELP DESK</dt>
+          </div>
+        </dl>
+      </div>
+
       <section className="bg-[#fce8eb] py-12">
         <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
 
@@ -347,6 +415,10 @@ export default function Home() {
           </div>
         </dl>
       </div>
+
+
+
+
     </div>
   );
 }
